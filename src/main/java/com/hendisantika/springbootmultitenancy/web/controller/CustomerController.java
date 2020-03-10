@@ -7,6 +7,7 @@ import com.hendisantika.springbootmultitenancy.web.dto.CustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -62,5 +63,12 @@ public class CustomerController {
 
         // Return the DTO:
         return Converters.convert(result);
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Produces("application/json")
+    public void delete(@PathParam("id") long id) {
+        repository.deleteById(id);
     }
 }
