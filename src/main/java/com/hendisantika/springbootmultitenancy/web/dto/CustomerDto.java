@@ -18,13 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerDto {
     @JsonProperty("id")
-    private final Long id;
+    private Long id;
 
     @JsonProperty("firstName")
-    private final String firstName;
+    private String firstName;
 
     @JsonProperty("lastName")
-    private final String lastName;
+    private String lastName;
 
     @JsonCreator
     public CustomerDto(@JsonProperty("id") Long id, @JsonProperty("firstName") String firstName, @JsonProperty(

@@ -1,5 +1,7 @@
 package com.hendisantika.springbootmultitenancy.web.configuration;
 
+import com.hendisantika.springbootmultitenancy.web.controller.CustomerController;
+import com.hendisantika.springbootmultitenancy.web.filter.TenantNameFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,7 @@ public class JerseyConfig extends ResourceConfig {
         register(TenantNameFilter.class);
 
         // Register the Resources:
-        register(CustomerResource.class);
+        register(CustomerController.class);
 
         // Uncomment to disable WADL Generation:
         //property("jersey.config.server.wadl.disableWadl", true);

@@ -1,6 +1,7 @@
 package com.hendisantika.springbootmultitenancy.web.converter;
 
 import com.hendisantika.springbootmultitenancy.model.Customer;
+import com.hendisantika.springbootmultitenancy.web.dto.CustomerDto;
 
 /**
  * Created by IntelliJ IDEA.

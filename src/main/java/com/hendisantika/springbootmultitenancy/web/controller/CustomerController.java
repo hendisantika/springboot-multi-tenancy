@@ -1,14 +1,15 @@
 package com.hendisantika.springbootmultitenancy.web.controller;
 
+import com.hendisantika.springbootmultitenancy.model.Customer;
 import com.hendisantika.springbootmultitenancy.repository.CustomerRepository;
 import com.hendisantika.springbootmultitenancy.web.converter.Converters;
 import com.hendisantika.springbootmultitenancy.web.dto.CustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,19 +28,25 @@ import java.util.stream.StreamSupport;
 @Path("/customers")
 public class CustomerController {
 
-    private final CustomerRepository repository;
-
     @Autowired
-    public CustomerResource(CustomerRepository repository) {
-        this.repository = repository;
-    }
+    private CustomerRepository repository;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public List<CustomerDto> getAll() {
         // Return the DTO List:
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(Converters::convert)
                 .collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public CustomerDto get(@PathParam("id") long id) {
+        Customer customer = repository.findById(id).orElse(null);
+
+        // Return the DTO:
+        return Converters.convert(customer);
     }
 }
