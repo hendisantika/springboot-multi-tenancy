@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -48,5 +49,18 @@ public class CustomerController {
 
         // Return the DTO:
         return Converters.convert(customer);
+    }
+
+    @POST
+    @Produces("application/json")
+    public CustomerDto post(CustomerDto customer) {
+        // Convert to the Domain Object:
+        Customer source = Converters.convert(customer);
+
+        // Store the Entity:
+        Customer result = repository.save(source);
+
+        // Return the DTO:
+        return Converters.convert(result);
     }
 }
