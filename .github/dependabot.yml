@@ -1,16 +1,70 @@
 version: 2
 updates:
+  # Maven dependencies (pom.xml)
   - package-ecosystem: maven
     directory: "/"
     schedule:
       interval: daily
-      time: '05:00'
+      time: "05:00"
       timezone: Asia/Jakarta
     open-pull-requests-limit: 10
-  - package-ecosystem: "github-actions"
+    target-branch: master
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - java
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: scope
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot*"
+        update-types:
+          - minor
+          - patch
+      database:
+        patterns:
+          - "org.postgresql*"
+          - "org.flywaydb*"
+          - "com.zaxxer*"
+      testing:
+        dependency-type: development
+        patterns:
+          - "org.testcontainers*"
+          - "org.junit*"
+          - "org.mockito*"
+          - "org.assertj*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven.plugins*"
+          - "org.codehaus.mojo*"
+    ignore:
+      # Major Spring Boot upgrades need manual migration work
+      - dependency-name: "org.springframework.boot:*"
+        update-types:
+          - version-update:semver-major
+
+  # GitHub Actions workflows (.github/workflows)
+  - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "daily"
-      time: '05:00'
+      interval: daily
+      time: "05:00"
       timezone: Asia/Jakarta
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
+    target-branch: master
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - github_actions
+    commit-message:
+      prefix: "ci"
+      include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
