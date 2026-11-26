@@ -10,7 +10,7 @@ package com.hendisantika.springbootmultitenancy.core;
  * Time: 17.03
  */
 public class ThreadLocalStorage {
-    private static ThreadLocal<String> tenant = new ThreadLocal<>();
+    private static final ThreadLocal<String> tenant = new ThreadLocal<>();
 
     public static String getTenantName() {
         return tenant.get();
@@ -18,6 +18,10 @@ public class ThreadLocalStorage {
 
     public static void setTenantName(String tenantName) {
         tenant.set(tenantName);
+    }
+
+    public static void clear() {
+        tenant.remove();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.hendisantika.springbootmultitenancy.web.configuration;
 
+import com.hendisantika.springbootmultitenancy.config.MultiTenancyProperties;
 import com.hendisantika.springbootmultitenancy.web.controller.CustomerController;
 import com.hendisantika.springbootmultitenancy.web.filter.TenantNameFilter;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,10 +18,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JerseyConfig extends ResourceConfig {
 
-    public JerseyConfig() {
+    public JerseyConfig(MultiTenancyProperties properties) {
 
         // Register the Filters:
-        register(TenantNameFilter.class);
+        register(new TenantNameFilter(properties.tenantNames()));
 
         // Register the Resources:
         register(CustomerController.class);
